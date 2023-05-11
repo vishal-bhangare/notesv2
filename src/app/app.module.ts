@@ -14,6 +14,13 @@ import {MatFormFieldControl, MatFormFieldModule} from '@angular/material/form-fi
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +40,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
+    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
