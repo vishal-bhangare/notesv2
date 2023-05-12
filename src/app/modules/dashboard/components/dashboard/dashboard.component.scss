@@ -31,11 +31,18 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    height: 30px;
+    height: 40px;
+    width: 400px;
+    border: 1px solid silver;
+    
     input{
       line-height: 30px;
       border: none;
       outline: none;
+      flex-grow:1;
+      font-size: 1rem;
+      padding: 2px;
+      padding-left: 5px;
     }
 
   }

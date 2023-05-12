@@ -15,8 +15,9 @@
     [matRippleDisabled]="false"
     [matRippleUnbounded]="true"
     [matRippleRadius]="25"
-    [matRippleColor]="'#1111110D'">
+    [matRippleColor]="'#1111110D'" [style.display]="'none'">
     <i class="fa-sharp fa-solid fa-xmark cancel" ></i></button>
+    <mat-divider vertical style="height:20px"></mat-divider>
 
     <button class="icon-button" matRipple
     [matRippleCentered]="true"
@@ -40,14 +41,16 @@
     [matRippleDisabled]="false"
     [matRippleUnbounded]="true"
     [matRippleRadius]="25"
-    [matRippleColor]="'#1111110D'">
+    [matRippleColor]="'#1111110D'"
+    [style.display]="(viewType=='grid-view') ? 'inline-block' : 'none'">
     <i class="fa-solid fa-grid-2" id="grid-view" ></i></button>
     <button class="icon-button" matRipple
     [matRippleCentered]="true"
     [matRippleDisabled]="false"
     [matRippleUnbounded]="true"
     [matRippleRadius]="25"
-    [matRippleColor]="'#1111110D'">
+    [matRippleColor]="'#1111110D'"
+    [style.display]="(viewType=='list-view') ? 'inline-block' : 'none'">
     <i class="fa-solid fa-list-ul" id="list-view" ></i></button>
     <button class="icon-button" matRipple
     [matRippleCentered]="true"

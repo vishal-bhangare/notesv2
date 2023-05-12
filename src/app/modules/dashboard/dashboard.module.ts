@@ -15,13 +15,22 @@ import { TrashComponent } from './components/trash/trash.component';
 import { RemindersComponent } from './components/reminders/reminders.component';
 import { MatRippleModule } from '@angular/material/core';
 
+import { ClickOutsideModule } from 'ng-click-outside';
+import { TextareaAutoresizeDirective } from 'src/app/directives/textarea-autoresize.directive';
+import { OutsideClickDirective } from 'src/app/directives/outside-click.directive';
+import { MatDialogModule} from '@angular/material/dialog';
+import { NoteDataComponent } from './components/notes/note-data/note-data.component';
+
 @NgModule({
   declarations: [
     DashboardComponent,
     NotesComponent,
     ArchiveComponent,
     TrashComponent,
-    RemindersComponent
+    RemindersComponent,
+    TextareaAutoresizeDirective,
+    OutsideClickDirective,
+    NoteDataComponent,
   ],
   imports: [
     CommonModule,
@@ -31,7 +40,9 @@ import { MatRippleModule } from '@angular/material/core';
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-    MatRippleModule
+    MatRippleModule,
+    ClickOutsideModule,
+    MatDialogModule
   ]
 })
 export class DashboardModule { }

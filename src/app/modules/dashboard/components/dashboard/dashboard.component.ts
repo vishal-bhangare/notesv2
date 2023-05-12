@@ -14,7 +14,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {     
-color:string ="#1f000000";
+  viewType = "list-view";
+  
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
