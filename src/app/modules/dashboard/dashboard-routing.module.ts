@@ -15,6 +15,7 @@ const routes: Routes = [
       { path: 'reminders', component: RemindersComponent },
       { path: 'archive', component: ArchiveComponent },
       { path: 'trash', component: TrashComponent },
+      { path:'',redirectTo:'notes',pathMatch: 'full'}
     ],
   },
     

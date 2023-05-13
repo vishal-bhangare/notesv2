@@ -20,6 +20,7 @@ import { TextareaAutoresizeDirective } from 'src/app/directives/textarea-autores
 import { OutsideClickDirective } from 'src/app/directives/outside-click.directive';
 import { MatDialogModule} from '@angular/material/dialog';
 import { NoteDataComponent } from './components/notes/note-data/note-data.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { NoteDataComponent } from './components/notes/note-data/note-data.compon
     MatDividerModule,
     MatRippleModule,
     ClickOutsideModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule,
+        ReactiveFormsModule
   ]
 })
 export class DashboardModule { }

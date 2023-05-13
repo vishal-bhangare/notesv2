@@ -18,12 +18,23 @@
     font-weight: 500;
     margin: 0px auto 3rem 2.5rem;
   }
-  .signup{
+  #forget-password{
     text-decoration: underline;
     margin:20px auto 0px 2.5rem;
     cursor:pointer;
-  }
 
+  }
+  mat-divider{
+    margin-top:15px;
+  }
+  span{
+    margin: 5px auto 0px 40px;
+  }
+  #signup{
+    text-decoration: underline;
+    margin:5px auto 0px 40px;
+    cursor:pointer;
+  }
 
 
   .mat-mdc-form-field{

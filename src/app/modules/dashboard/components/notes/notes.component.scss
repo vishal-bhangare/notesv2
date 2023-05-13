@@ -89,7 +89,7 @@
     .description {
       font-size: 0.8rem;
     }
-    .delete {
+    .pin {
       position: absolute;
       top: 0;
       right: 0;
@@ -104,6 +104,8 @@
   border-radius: 4px;
 padding: 4px 8px;
 font-size: 1.08rem;
+border: none;
+margin: 0px 4px;
 }
 .Button:hover {
   background-color: #11111110;
@@ -119,4 +121,11 @@ font-size: 1.08rem;
     width: 20px;
     height: 20px;
   }
+}
+.my-class .mat-dialog-container{
+  height: 400px;
+  width: 600px;
+  border-radius: 10px;
+  background: lightcyan;
+  background-color:red;
 }

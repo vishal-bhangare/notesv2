@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SigninComponent } from './components/signin/signin.component';
-import { SignupComponent } from './components/signup/signup.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
@@ -20,15 +19,23 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { DashboardComponent } from './modules/dashboard/components/dashboard/dashboard.component';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { VerificationComponent } from './components/verification/verification.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { MatRippleModule } from '@angular/material/core';
+import { VerifyComponent } from './components/verify/verify.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
-    SignupComponent,
     ForgetPasswordComponent,
     NotFoundComponent,
-    HomepageComponent
+    HomepageComponent,
+    SignupComponent,
+    VerificationComponent,
+    VerifyComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +45,10 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
+    MatRippleModule,
     ReactiveFormsModule,
     FormsModule,
-    DashboardModule
+    DashboardModule, MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

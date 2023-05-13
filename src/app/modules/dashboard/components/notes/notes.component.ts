@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as $ from 'jquery'
 import { NoteDataComponent } from './note-data/note-data.component';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-notes',
@@ -14,8 +15,9 @@ export class NotesComponent implements OnInit {
 
   openDialog(): void {
     let dialogRef = this.dialog.open(NoteDataComponent, {
-      width: '250px',
-      data: { title: "hello",desc:" Ram" }
+      width: '40%',
+      height:'60%',
+      data: { title: "hello",description:" Ram" }
     });
   }
   show = false;
@@ -53,6 +55,16 @@ export class NotesComponent implements OnInit {
   ]
   curNoteCount = 2;
   
+  addnoteForm = new FormGroup({
+    title: new FormControl(''),
+    description: new FormControl(''),
+  });
+  onSubmit(){
+    if(this.addnoteForm.valid){
+      console.log(this.addnoteForm.value);
+      
+    }
+  }
   addNote(){
     if(this.show){
       const noteTitle = $('#title').val();

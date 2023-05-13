@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./signin.component.scss'],
 })
 export class SigninComponent implements OnInit {
-  ngOnInit(): void {}
+  ngOnInit(): void {$("body").css("background","#fff")}
   signinForm = new FormGroup({
     email: new FormControl('',[
       Validators.required,

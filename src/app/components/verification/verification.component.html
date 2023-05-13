@@ -1,0 +1,25 @@
+<div class="container">
+  <button class="icon-button" matRipple
+  [matRippleCentered]="true"
+  [matRippleDisabled]="false"
+  [matRippleUnbounded]="true"
+  [matRippleRadius]="25"
+  [matRippleColor]="'#1111110D'">
+  <i class="fa-sharp fa-solid fa-xmark cancel" ></i></button>
+  <div class="head">
+    <img src="assets/confirmation.png" alt="could not load image" />
+  </div>
+  <div class="main">
+    <span class="title">Verify your account</span>
+    <br />
+    <span class="content">
+      Almost there! We've sent a account verification email to
+      <span id="email">xyz@abc.com</span>.</span>
+      <span>You need to verify your account to log into Notes.</span
+    >
+  </div>
+  <mat-divider style="width:70%"></mat-divider>
+  <div class="footer">
+    if you not recieved any mail <a>Resend verification mail</a>
+  </div>
+</div>
