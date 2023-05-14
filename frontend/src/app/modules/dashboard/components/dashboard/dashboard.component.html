@@ -1,0 +1,91 @@
+<mat-toolbar class="mat-elevation-z8 navbar">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.mode === 'over'"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>
+  <span id="site-name">Notes</span>
+  <div class="search-box">
+      <input type="text" name="search-value" id="search-value">
+    <button class="icon-button" matRipple
+    [matRippleCentered]="true"
+    [matRippleDisabled]="false"
+    [matRippleUnbounded]="true"
+    [matRippleRadius]="25"
+    [matRippleColor]="'#1111110D'" [style.display]="'none'">
+    <i class="fa-sharp fa-solid fa-xmark cancel" ></i></button>
+    <mat-divider vertical style="height:20px"></mat-divider>
+
+    <button class="icon-button" matRipple
+    [matRippleCentered]="true"
+    [matRippleDisabled]="false"
+    [matRippleUnbounded]="true"
+    [matRippleRadius]="25"
+    [matRippleColor]="'#1111110D'">
+    <i class="fa-solid fa-magnifying-glass" ></i></button>
+    
+  </div>
+  <div id="right">
+    <button class="icon-button" matRipple
+    [matRippleCentered]="true"
+    [matRippleDisabled]="false"
+    [matRippleUnbounded]="true"
+    [matRippleRadius]="25"
+    [matRippleColor]="'#1111110D'">
+    <i class="fa-solid fa-rotate-right" id="refreshBtn" ></i></button>
+    <button class="icon-button" matRipple
+    [matRippleCentered]="true"
+    [matRippleDisabled]="false"
+    [matRippleUnbounded]="true"
+    [matRippleRadius]="25"
+    [matRippleColor]="'#1111110D'"
+    [style.display]="(viewType=='grid-view') ? 'inline-block' : 'none'">
+    <i class="fa-solid fa-grid-2" id="grid-view" ></i></button>
+    <button class="icon-button" matRipple
+    [matRippleCentered]="true"
+    [matRippleDisabled]="false"
+    [matRippleUnbounded]="true"
+    [matRippleRadius]="25"
+    [matRippleColor]="'#1111110D'"
+    [style.display]="(viewType=='list-view') ? 'inline-block' : 'none'">
+    <i class="fa-solid fa-list-ul" id="list-view" ></i></button>
+    <button class="icon-button" matRipple
+    [matRippleCentered]="true"
+    [matRippleDisabled]="false"
+    [matRippleUnbounded]="true"
+    [matRippleRadius]="25"
+    [matRippleColor]="'#1111110D'">
+    <i class="fa-solid fa-user" id="user"></i></button>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <button mat-button class="menu-button" routerLinkActive="active" routerLink="notes">
+      <i class="sidenav-link-icon fa-light fa-notes" > </i>
+      <span>Notes</span>
+    </button>
+    <button mat-button class="menu-button" routerLinkActive="active" routerLink="reminders">
+      <i class="sidenav-link-icon fa-regular fa-bell" > </i>
+      <span>Reminders</span>
+    </button>
+    <button mat-button class="menu-button" routerLinkActive="active" routerLink="archive">
+      <i class="sidenav-link-icon fa-regular fa-box-archive" > </i>
+      <span>Archive</span>
+    </button>
+
+    <button mat-button class="menu-button" routerLinkActive="active" routerLink="trash">
+      <i class="sidenav-link-icon fa-regular fa-trash-can" > </i>
+      <span>Trash</span>
+    </button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+      <router-outlet></router-outlet>
+      <!-- Main content -->
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

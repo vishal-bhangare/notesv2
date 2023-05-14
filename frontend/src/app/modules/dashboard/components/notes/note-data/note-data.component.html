@@ -1,0 +1,69 @@
+<form [formGroup]="noteDataForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content
+    ><textarea
+    name="title"
+    id="title"
+    class="form-control"
+    formControlName="title"
+    textarea-autoresize
+  ></textarea><br>
+  <textarea
+      type="text"
+      name="description"
+      id="description"
+      class="form-control"
+      formControlName="description"
+      textarea-autoresize
+  ></textarea></mat-dialog-content>
+  <mat-dialog-actions>
+    <div class="group1">
+      <button
+      class="icon-button"
+      matRipple
+      [matRippleCentered]="true"
+      [matRippleDisabled]="false"
+      [matRippleUnbounded]="true"
+      [matRippleRadius]="22"
+      [matRippleColor]="'#1111110D'"
+    >
+      <i class="fa-solid fa-inbox-in"></i>
+    </button>
+    <button
+      class="icon-button"
+      matRipple
+      [matRippleCentered]="true"
+      [matRippleDisabled]="false"
+      [matRippleUnbounded]="true"
+      [matRippleRadius]="22"
+      [matRippleColor]="'#1111110D'"
+    >
+      <i class="fa-solid fa-trash"></i>
+    </button>
+    <button (click)="toggleEdit()"
+      [style.background]="this.isEdit ? '#1111111D' : 'none'"
+      class="icon-button"
+      matRipple
+      [matRippleCentered]="true"
+      [matRippleDisabled]="false"
+      [matRippleUnbounded]="true"
+      [matRippleRadius]="22"
+      [matRippleColor]="'#1111110D'"
+    >
+    <i class="fa-solid fa-pen-to-square" ></i>
+    </button>
+    </div>
+    <div class="group2">
+
+    <button mat-button type="submit" *ngIf="this.isEdit">Save</button>
+    <button mat-button mat-dialog-close>Close</button>
+    </div>
+  </mat-dialog-actions>
+</form>
+
+<!-- <h2 mat-dialog-title>{{this.data.title}}</h2>
+<mat-dialog-content>
+   {{this.data.desc}}
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions> -->

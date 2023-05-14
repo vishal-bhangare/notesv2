@@ -1,0 +1,131 @@
+.addNote-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  .addNote {
+    position: relative;
+    // background-color: rgb(85, 30, 212);
+    min-width: 600px;
+    width: fit-content;
+    min-height: 28px;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 20px 0px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 3px, rgba(0, 0, 0, 0.23) 0px 2px 6px;
+
+    .list-box {
+      position: absolute;
+      right: 15px;
+    }
+
+    textarea {
+      width: calc(100% - 10px);
+      resize: none;
+      height: fit-content;
+      outline: none;
+      padding: 5px;
+      font-size: 1rem;
+      border-radius: 5px;
+      max-height: 200px;
+      border: none;
+    }
+    textarea::placeholder {
+      color: #b3b3b3;
+    }
+    // textarea:is(:focus, :valid) {
+    //   padding: 5px;
+    // }
+    textarea::-webkit-scrollbar {
+      width: 0px;
+    }
+    .pinBtn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      font-size: 20px;
+    }
+    #title {
+      font-size: 1rem;
+      height: 40px;
+    }
+    #description {
+      font-size: 0.8rem;
+      height: 35px;
+    }
+    .actionBtns {
+      div {
+        display: inline-block;
+      }
+      color: rgba(0, 0, 0, 0.702);
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+.Notes-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 0px;
+
+  .note {
+    position: relative;
+    min-width: 600px;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 8px;
+    margin: 5px 0px;
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+
+    .title {
+      font-size: 1rem;
+    }
+    .description {
+      font-size: 0.8rem;
+    }
+    .pin {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  .note:hover {
+    box-shadow: rgba(0, 0, 0, 0.23) 0px 2px 2px;
+  }
+}
+
+.Button {
+  border-radius: 4px;
+padding: 4px 8px;
+font-size: 1.08rem;
+border: none;
+margin: 0px 4px;
+}
+.Button:hover {
+  background-color: #11111110;
+}
+.icon-button {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  border-radius: 50%;
+  i {
+    width: 20px;
+    height: 20px;
+  }
+}
+.my-class .mat-dialog-container{
+  height: 400px;
+  width: 600px;
+  border-radius: 10px;
+  background: lightcyan;
+  background-color:red;
+}

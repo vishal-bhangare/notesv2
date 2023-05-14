@@ -1,0 +1,44 @@
+<form [formGroup]="signinForm" (ngSubmit)="onSubmit()" class="signin-box">
+  <span class="info">Sign In</span>
+  <mat-form-field appearance="outline">
+    <mat-label>Enter your email</mat-label>
+    <input
+      id="email"
+      matInput
+      type="email"
+      class="form-control"
+      formControlName="email"
+      name="email"
+    />
+    <mat-error *ngIf="fc.email.errors?.required">Email is required</mat-error>
+    <mat-error *ngIf="fc.email.errors?.email">Enter valid email</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Enter your password</mat-label>
+    <input
+      id="password"
+      [type]="hide ? 'password' : 'text'"
+      class="form-control"
+      formControlName="password"
+      name="password"
+      matInput
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide"
+    >
+      <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+    </button>
+    <mat-error *ngIf="fc.password.errors?.required">Password is required</mat-error>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" type="submit">Signin</button>
+  <a routerLink="../forget-password" id="forget-password">Forget password</a>
+  <mat-divider style="width:70%"></mat-divider>
+  <span>Don't have account?</span>
+  <a routerLink="../signup" id="signup">Create an new account</a>
+</form>
