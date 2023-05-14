@@ -6,5 +6,5 @@ import * as $ from 'jquery';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'notes';
+  title = 'notesv2';
 }
