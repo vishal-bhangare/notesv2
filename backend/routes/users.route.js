@@ -6,6 +6,7 @@ const { check, validationResult } = require("express-validator");
 const usersRoute = express.Router();
 let userSchema = require("../models/User");
 const authorize = require("../middlewares/auth");
+const sendMail = require("../services/mail.service");
 
 usersRoute
   .route("/signup", [
@@ -28,16 +29,35 @@ usersRoute
     } else {
       bcrypt.hash(req.body.password, 10).then((hash) => {
         const user = new userSchema({
+          created_at:new Date(),
+          updated_at:new Date(),
           name: req.body.name,
           email: req.body.email,
           password: hash,
+          account_status: req.body.account_status,
+
         });
         user
-          .save()
-          .then((response) => {
+          .save({returnOriginal:false})
+          .then((data) => {
+            user_id = data["_id"];
+            user_email = data["email"];
+            user_name = data["name"];
+
+            let user_token = jwt.sign(
+              {
+                userId: user_id,
+              },
+              process.env.TOKEN_SECRET,
+              {
+                expiresIn: "12h",
+              }
+            );
+
+            //sendVerificationMail(user_name, user_email, user_token);
             res.status(201).json({
               message: "User successfully created!",
-              result: response,
+              result: data,
             });
           })
           .catch((error) => {
@@ -50,18 +70,26 @@ usersRoute
   });
 
 usersRoute.route("/signin").post((req, res, next) => {
+  query = {};
+  if (req.query.id) {
+    query = { _id: req.query.id };
+    console.log(req.query.id);
+  } else {
+    query = { email: req.body.email };
+  }
+
   let getUser;
   userSchema
-    .findOne({
-      email: req.body.email,
-    })
+    .findOne(query)
     .then((user) => {
+      console.log(user);
       if (!user) {
         return res.status(401).json({
           message: "Authentication failed",
         });
       }
       getUser = user;
+      if (req.query.id){ return true}
       return bcrypt.compare(req.body.password, user.password);
     })
     .then((response) => {
@@ -75,7 +103,7 @@ usersRoute.route("/signin").post((req, res, next) => {
           email: getUser.email,
           userId: getUser._id,
         },
-        "longer-secret-is-better",
+        process.env.TOKEN_SECRET,
         {
           expiresIn: "1h",
         }
@@ -87,7 +115,7 @@ usersRoute.route("/signin").post((req, res, next) => {
       });
     })
     .catch((err) => {
-      return res.status(401).json({
+      return res.json({
         message: "Authentication failed",
       });
     });
@@ -122,30 +150,60 @@ usersRoute.route("/user-profile/:id").get((req, res, next) => {
 });
 // Update User
 usersRoute.route("/update-user/:id").put((req, res, next) => {
-  console.log(req.params.id);
-  console.log(req.body);
-  userSchema.findByIdAndUpdate(
-    req.params.id,
-    {
-      $set: req.body,
+  userSchema
+    .findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { returnOriginal: false }
+    )
+    .then((data) => {
+      res.json(data);
+      console.log("User successfully updated!");
     })
-		.then((data)=>{
-			res.json(data);
-			console.log("User successfully updated!");
-		})
-		.catch((err)=>{return next(err)})
-		
+    .catch((err) => {
+      return next(err);
+    });
 });
 // Delete User
 usersRoute.route("/delete-user/:id").delete((req, res, next) => {
-  userSchema.findByIdAndRemove(req.params.id)    
-		.then((data)=>{
+  userSchema
+    .findByIdAndRemove(req.params.id)
+    .then((data) => {
       res.status(200).json({
         msg: data,
       });
-    }) 
-		.catch((error) =>{
-      return next(error);
     })
+    .catch((error) => {
+      return next(error);
+    });
 });
+
+usersRoute.route("/verify-user/:token").put((req, res, next) => {
+  user_id = jwt.decode(req.params.token, process.env.TOKEN_SECRET)["userId"];
+  console.log(user_id);
+  userSchema
+    .findByIdAndUpdate(user_id, {
+      $set: { account_status: 1 },
+    },{returnOriginal:false})
+    .then((data) => {
+      res.json(data);
+      console.log("User successfully updated!");
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
+
+// usersRoute.route("/signin/?token")
+function sendVerificationMail(user_name, user_email, user_token) {
+  subject =
+    "<h2>Confirm Your Email Address</h2><br/><p>Hi " +
+    user_name +
+    ",<br />Tap the button to confirm your email address.<br />If you didn't create an account with 'APP_NAME', you can safely<br />  delete this email.</p><a href='https://localhost:4200/verify-user/" +
+    user_token +
+    "' target='_blank'><button style='    border: none;    background-color: #ffd166;    padding: 0.4rem 0.8rem;    font-size: 1rem;    border-radius: 3px;  '>Click to Verify Email</button></a>";
+  sendMail(user_email, "Notes Verification Email", subject);
+}
 module.exports = usersRoute;

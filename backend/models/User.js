@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const uniqueValidator = require('mongoose-unique-validator');
 let userSchema = new Schema({
+    created_at:{
+        type: Date
+    },
+    updated_at:{
+        type:Date
+    },
     name: {
         type: String
     },
@@ -17,6 +23,12 @@ let userSchema = new Schema({
     }
 }, {
     collection: 'users'
+},{
+  timestamps:
+  {
+    createdAt: 'created_at', // Use `created_at` to store the created date
+    updatedAt: 'updated_at' // and `updated_at` to store the last updated date
+  }
 })
 userSchema.plugin(uniqueValidator, { message: 'Email already in use.' });
 module.exports = mongoose.model('User', userSchema)
