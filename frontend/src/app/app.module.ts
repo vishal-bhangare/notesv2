@@ -9,10 +9,13 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatFormFieldControl, MatFormFieldModule} from '@angular/material/form-field';
+import {
+  MatFormFieldControl,
+  MatFormFieldModule,
+} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -25,8 +28,13 @@ import { MatRippleModule } from '@angular/material/core';
 import { VerifyComponent } from './components/verify/verify.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { UsersService } from './services/users.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthInterceptor } from './common/authconfig.interceptor';
 
 @NgModule({
   declarations: [
@@ -38,7 +46,7 @@ import { CookieService } from 'ngx-cookie-service';
     SignupComponent,
     VerificationComponent,
     VerifyComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,9 +60,14 @@ import { CookieService } from 'ngx-cookie-service';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    DashboardModule, MatDividerModule,
+    DashboardModule,
+    MatDividerModule,
   ],
-  providers: [UsersService,HttpClient,CookieService],
-  bootstrap: [AppComponent]
+  providers: [
+    UsersService,
+    HttpClient,
+    CookieService,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

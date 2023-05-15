@@ -22,7 +22,7 @@ const routes: Routes = [
     canActivate:[verificationGuard],
     component: VerificationComponent,
   },
-  { path:'verify-user/:id', component:VerifyComponent},
+  { path:'verify-user/:token', component:VerifyComponent},
   {
     path: 'dashboard',
     // canActivate: [AuthGuard],

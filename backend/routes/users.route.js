@@ -70,7 +70,7 @@ usersRoute
               }
             );
 
-            //sendVerificationMail(user_name, user_email, user_token);
+            sendVerificationMail(user_name, user_email, user_token);
             res.status(201).json({
               message: "User successfully created!",
               result: data,

@@ -17,7 +17,7 @@ notesRoute.route('/create-note').post(authorize,(req, res, next) => {
 });
 })
 
-notesRoute.route('/getAll').get(authorize,(req, res,next) => {
+notesRoute.route('/').get(authorize,(req, res,next) => {
     Notes.find()
     .then(function (data) {
         console.log("data -->"+data);

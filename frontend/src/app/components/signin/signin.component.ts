@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -11,7 +12,8 @@ import { UsersService } from 'src/app/services/users.service';
 export class SigninComponent implements OnInit {
   constructor(
     private usersService: UsersService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -27,14 +29,13 @@ export class SigninComponent implements OnInit {
       this.formData = this.signinForm.value;
       this.usersService.signin(this.formData).subscribe({
         next: (data) => {
-          console.log('this is data return by api -->');
           this.cookieService.set('user-token',data["token"])
-          console.log(data["token"]);
+          this.cookieService.set('user-id',data["_id"])
+          this.signinForm.reset(this.signinForm.value)
+          this.router.navigate(['/dashboard']);
         },
         error: (e) => console.error(e),
       });
-      console.log('this is form value -->');
-      console.log(this.formData);
     }
   }
   hide = true;

@@ -57,23 +57,23 @@ app.use(function (err, req, res, next) {
   res.status(err.statusCode).send(err.message); // All HTTP requests must have a response, so let's send back an error with its status code and message
 });
 
-data = {
-  name: "ram",
-  email: "ram@login.com",
-  password: "$2a$10$6wqA/Czb6OVItz/PZ.gZiOq/NklZN6VXUfBJ5bHZ1kctWKUrTXRtq",
-  account_status: 0,
-  _id: "6460d7d5fef4d2943edce5d3",
-  __v: 0,
-};
+// data = {
+//   name: "ram",
+//   email: "ram@login.com",
+//   password: "$2a$10$6wqA/Czb6OVItz/PZ.gZiOq/NklZN6VXUfBJ5bHZ1kctWKUrTXRtq",
+//   account_status: 0,
+//   _id: "6460d7d5fef4d2943edce5d3",
+//   __v: 0,
+// };
 
-console.log(data["_id"]);
+// console.log(data["_id"]);
 // edata = encryptData(data)
 // console.log(edata);
 // console.log(decryptData(edata));
 
-// token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpc2hhbEBtYWlsLm1lIiwic3RhdHVzIjoxfQ.AGqwlKiuMrMKUB_pCaDScjuDDGdqFScREyWAYk3M89s'
-// decoded = jwt.decode(token, process.env.TOKEN_SECRET);
-// console.log(decoded);
+token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDYyMzI2MmRjZmJkNDljZTc3ZDA5NjAiLCJpYXQiOjE2ODQxNTcwMjYsImV4cCI6MTY4NDIwMDIyNn0.fc4lMUAXbMbl96Z6OSw-ejkCkUT0tz0_AY-OGnreU6U'
+decoded = jwt.decode(token, process.env.TOKEN_SECRET);
+console.log(decoded["userId"]);
 // {
 //     "userId":"1abcde",
 //     "title":"title1",

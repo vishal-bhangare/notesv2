@@ -21,6 +21,8 @@ import { OutsideClickDirective } from 'src/app/directives/outside-click.directiv
 import { MatDialogModule} from '@angular/material/dialog';
 import { NoteDataComponent } from './components/notes/note-data/note-data.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from 'src/app/common/authconfig.interceptor';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatDialogModule,
     FormsModule,
         ReactiveFormsModule
-  ]
+  ],
+  providers:[{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+  },]
 })
 export class DashboardModule { }

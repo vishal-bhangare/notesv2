@@ -46,6 +46,7 @@ export class SignupComponent implements OnInit {
           console.log("this is data return by api -->");
           console.log(data);
           this.router.navigate([`/signup/verification/${data["result"]["_id"]}`]);
+          this.signupForm.reset(this.signupForm.value)
         },
         error: (e) => console.error(e)
       });
