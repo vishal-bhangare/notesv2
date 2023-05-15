@@ -8,6 +8,22 @@ let userSchema = require("../models/User");
 const authorize = require("../middlewares/auth");
 const sendMail = require("../services/mail.service");
 
+function changeTimeZone(date, timeZone) {
+  if (typeof date === 'string') {
+    return new Date(
+      new Date(date).toLocaleString('en-US', {
+        timeZone,
+      }),
+    );
+  }
+
+  return new Date(
+    date.toLocaleString('en-US', {
+      timeZone,
+    }),
+  );
+}
+
 usersRoute
   .route("/signup", [
     check("name")
@@ -29,8 +45,8 @@ usersRoute
     } else {
       bcrypt.hash(req.body.password, 10).then((hash) => {
         const user = new userSchema({
-          created_at:new Date(),
-          updated_at:new Date(),
+          created_at:changeTimeZone(new Date(), 'Asia/Kolkata'), 
+          updated_at:changeTimeZone(new Date(), 'Asia/Kolkata'), 
           name: req.body.name,
           email: req.body.email,
           password: hash,
@@ -61,6 +77,7 @@ usersRoute
             });
           })
           .catch((error) => {
+            console.log(error);
             res.status(500).json({
               error: error,
             });
@@ -201,7 +218,7 @@ function sendVerificationMail(user_name, user_email, user_token) {
   subject =
     "<h2>Confirm Your Email Address</h2><br/><p>Hi " +
     user_name +
-    ",<br />Tap the button to confirm your email address.<br />If you didn't create an account with 'APP_NAME', you can safely<br />  delete this email.</p><a href='https://localhost:4200/verify-user/" +
+    ",<br />Tap the button to confirm your email address.<br />If you didn't create an account with 'APP_NAME', you can safely<br />  delete this email.</p><a href='"+process.env.BASE_URL+"/verify-user/" +
     user_token +
     "' target='_blank'><button style='    border: none;    background-color: #ffd166;    padding: 0.4rem 0.8rem;    font-size: 1rem;    border-radius: 3px;  '>Click to Verify Email</button></a>";
   sendMail(user_email, "Notes Verification Email", subject);

@@ -24,6 +24,9 @@ import { SignupComponent } from './components/signup/signup.component';
 import { MatRippleModule } from '@angular/material/core';
 import { VerifyComponent } from './components/verify/verify.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { UsersService } from './services/users.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -48,9 +51,10 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     MatRippleModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
     DashboardModule, MatDividerModule,
   ],
-  providers: [],
+  providers: [UsersService,HttpClient,CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

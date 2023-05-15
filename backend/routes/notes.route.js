@@ -1,10 +1,10 @@
 const express = require('express')
 const app = express()
 const notesRoute = express.Router()
-
+const authorize = require('../middlewares/auth.js')
 let Notes = require('../models/Notes')
 
-notesRoute.route('/create-note').post((req, res, next) => {
+notesRoute.route('/create-note').post(authorize,(req, res, next) => {
     console.log(req.body);
   Notes.create(req.body)
   
@@ -17,7 +17,7 @@ notesRoute.route('/create-note').post((req, res, next) => {
 });
 })
 
-notesRoute.route('/getAll').get((req, res,next) => {
+notesRoute.route('/getAll').get(authorize,(req, res,next) => {
     Notes.find()
     .then(function (data) {
         console.log("data -->"+data);
@@ -28,7 +28,7 @@ notesRoute.route('/getAll').get((req, res,next) => {
     });
 });
 
-notesRoute.route('/note/:id').get((req, res) => {
+notesRoute.route('/note/:id').get(authorize,(req, res) => {
   Notes.findById(req.params.id)
   .then(function (data) {
     console.log("data -->"+data);
@@ -39,7 +39,7 @@ notesRoute.route('/note/:id').get((req, res) => {
 });
 })
 
-notesRoute.route('/update-note/:id').put((req, res, next) => {
+notesRoute.route('/update-note/:id').put(authorize,(req, res, next) => {
   Notes.findByIdAndUpdate(
     req.params.id,
     {
@@ -55,7 +55,7 @@ notesRoute.route('/update-note/:id').put((req, res, next) => {
     })
 })
 
-notesRoute.route('/delete-note/:id').delete((req, res, next) => {
+notesRoute.route('/delete-note/:id').delete(authorize,(req, res, next) => {
   Notes.findOneAndRemove(req.params.id)
   .then((data)=>{
     res.status(200).json({

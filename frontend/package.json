@@ -25,6 +25,7 @@
     "dotenv": "^16.0.3",
     "jquery": "^3.6.4",
     "ng-click-outside": "^9.0.1",
+    "ngx-cookie-service": "^16.0.0",
     "rxjs": "~7.8.0",
     "save": "^2.9.0",
     "tslib": "^2.3.0",

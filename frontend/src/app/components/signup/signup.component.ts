@@ -3,8 +3,10 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
+  Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
 import { ValidatorService } from 'src/app/validator.service';
 
 @Component({
@@ -14,23 +16,41 @@ import { ValidatorService } from 'src/app/validator.service';
   providers: [ValidatorService],
 })
 export class SignupComponent implements OnInit {
-  ngOnInit(): void {}
-  constructor(private fb: FormBuilder, private v: ValidatorService) {}
+  constructor(
+    private fb: FormBuilder,
+    private v: ValidatorService,
+    private usersService: UsersService,
+    private router: Router
+    ) {}
+    ngOnInit(): void {
+      
+    }
   hide = true;
   signupForm = new FormGroup(
     {
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
-        Validators.required,
-      ]),
+      password: new FormControl('', [Validators.required]),
       confirmPassword: new FormControl('', [Validators.required]),
     },
     { validators: this.v.passwordMatch('password', 'confirmPassword') }
   );
-  onSubmit() {
+  formData:any;
+  onSignup() {
+    
     if (this.signupForm.valid) {
-      console.log(this.signupForm.value);
+      this.formData = this.signupForm.value;
+      this.usersService.signup(this.formData)
+      .subscribe({
+        next: (data) => {
+          console.log("this is data return by api -->");
+          console.log(data);
+          this.router.navigate([`/signup/verification/${data["result"]["_id"]}`]);
+        },
+        error: (e) => console.error(e)
+      });
+      console.log("this is form value -->");
+      console.log(this.formData);
     }
   }
   get fc() {

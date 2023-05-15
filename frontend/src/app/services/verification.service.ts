@@ -6,7 +6,5 @@ import { Injectable } from '@angular/core';
 export class VerificationService {
 
   constructor() { }
-  isAccountCreated() {
-    return true;
-  }
+  isAccountCreated = true;
 }

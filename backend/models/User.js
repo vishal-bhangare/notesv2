@@ -13,7 +13,7 @@ let userSchema = new Schema({
     },
     email: {
         type: String,
-        unique: true
+        // unique: true
     },
     password: {
         type: String
@@ -30,7 +30,7 @@ let userSchema = new Schema({
     updatedAt: 'updated_at' // and `updated_at` to store the last updated date
   }
 })
-userSchema.plugin(uniqueValidator, { message: 'Email already in use.' });
+// userSchema.plugin(uniqueValidator, { message: 'Email already in use.' });
 module.exports = mongoose.model('User', userSchema)
 
 // const mongoose = require('mongoose');
