@@ -52,7 +52,10 @@
     [matRippleColor]="'#1111110D'"
     [style.display]="(viewType=='list-view') ? 'inline-block' : 'none'">
     <i class="fa-solid fa-list-ul" id="list-view" ></i></button>
-    <button class="icon-button" matRipple
+
+    <button class="icon-button" 
+    (click)="logout()"
+    matRipple
     [matRippleCentered]="true"
     [matRippleDisabled]="false"
     [matRippleUnbounded]="true"

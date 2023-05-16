@@ -22,18 +22,32 @@ export class NotesService {
   ) {}
 
   createNote(data: any): Observable<any> {
-    let API_URL = `${this.apiUrl}/create-note`;
-    return this.http
-      .post(API_URL, data)
-      .pipe(catchError(this.error));
+    let API_URL = `${this.apiUrl}/create`;
+    return this.http.post(API_URL, data).pipe(catchError(this.error));
   }
-  getAllNotes() {
+  getAllNotes(): Observable<any> {
     return this.http.get(`${this.apiUrl}/`);
   }
-  getNote(id: any): Observable<any> {
-    let API_URL = `${this.apiUrl}/signin/?id=${id}`;
+  getUserNotes(id: any): Observable<any> {
     return this.http
-      .post(API_URL, { headers: this.headers })
+      .get(`${this.apiUrl}/?user=${id}`, { headers: this.headers })
+      .pipe(catchError(this.error));
+  }
+  getNote(id: any): Observable<any> {
+    return this.http
+      .get(`${this.apiUrl}/${id}`, { headers: this.headers })
+      .pipe(catchError(this.error));
+  }
+  updateNote(data: any, id: any): Observable<any> {
+    let API_URL = `${this.apiUrl}/update/${id}`;
+    return this.http
+      .put(API_URL, data, { headers: this.headers })
+      .pipe(catchError(this.error));
+  }
+  deleteNote(id: any): Observable<any> {
+    let API_URL = `${this.apiUrl}/delete/${id}`;
+    return this.http
+      .delete(API_URL,{ headers: this.headers })
       .pipe(catchError(this.error));
   }
   error(error: HttpErrorResponse) {

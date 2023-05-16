@@ -109,7 +109,7 @@
     class="note"
     *ngFor="let data of notesData"
     data-id="{{ data._id }}"
-    (click)="openDialog()"
+    (click)="openDialog(data._id,data.title,data.description)"
 
   >
     <div class="title">{{ data.title }}</div>

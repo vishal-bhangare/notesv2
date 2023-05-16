@@ -1,4 +1,4 @@
-<form [formGroup]="noteDataForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="noteDataForm" (ngSubmit)="onSave()">
   <mat-dialog-content
     ><textarea
     name="title"
@@ -17,7 +17,7 @@
   ></textarea></mat-dialog-content>
   <mat-dialog-actions>
     <div class="group1">
-      <button
+      <button type="button"
       class="icon-button"
       matRipple
       [matRippleCentered]="true"
@@ -28,7 +28,8 @@
     >
       <i class="fa-solid fa-inbox-in"></i>
     </button>
-    <button
+    <button type="button"
+    (click)="onDelete()"
       class="icon-button"
       matRipple
       [matRippleCentered]="true"
@@ -39,8 +40,8 @@
     >
       <i class="fa-solid fa-trash"></i>
     </button>
-    <button (click)="toggleEdit()"
-      [style.background]="this.isEdit ? '#1111111D' : 'none'"
+    <button type="button" (click)="toggleEdit()"
+      [style.background]="this.isEditable ? '#1111111D' : 'none'"
       class="icon-button"
       matRipple
       [matRippleCentered]="true"
@@ -48,14 +49,15 @@
       [matRippleUnbounded]="true"
       [matRippleRadius]="22"
       [matRippleColor]="'#1111110D'"
-    >
+    #editBtn>
     <i class="fa-solid fa-pen-to-square" ></i>
     </button>
     </div>
     <div class="group2">
 
-    <button mat-button type="submit" *ngIf="this.isEdit">Save</button>
-    <button mat-button mat-dialog-close>Close</button>
+    <button  (click)="$event.stopPropagation()"  mat-button type="submit" 
+    [style.display]="this.isEditable ? 'inline' : 'none'">Save</button>
+    <button mat-button type="button" (click)="onClose()">Close</button>
     </div>
   </mat-dialog-actions>
 </form>

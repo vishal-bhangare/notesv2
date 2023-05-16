@@ -4,6 +4,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { delay, filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UsersService } from 'src/app/services/users.service';
 
 
 
@@ -19,7 +20,8 @@ export class DashboardComponent {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
-  constructor(private observer: BreakpointObserver, private router: Router) {}
+  constructor(private observer: BreakpointObserver, private router: Router,
+    private usersService:UsersService) {}
 
   ngAfterViewInit() {
     this.observer
@@ -45,5 +47,8 @@ export class DashboardComponent {
           this.sidenav.close();
         }
       });
+  }
+  logout(){
+    this.usersService.doLogout()
   }
 }

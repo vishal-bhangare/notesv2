@@ -85,8 +85,12 @@ export class UsersService {
   }
   doLogout() {
     let removeToken = this.cookieService.delete('user-token');
-    if (removeToken == null) {
+    let removeId= this.cookieService.delete('user-id');
+    if (removeToken == null &&  removeId == null) {
       this.router.navigate(['signin']);
+    }
+    else{
+      alert("Unable to logout")
     }
   }
   // Handle Errors

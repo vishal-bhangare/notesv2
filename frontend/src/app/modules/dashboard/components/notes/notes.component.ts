@@ -5,6 +5,7 @@ import { NoteDataComponent } from './note-data/note-data.component';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UsersService } from 'src/app/services/users.service';
 import { NotesService } from 'src/app/services/notes.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-notes',
@@ -14,28 +15,35 @@ import { NotesService } from 'src/app/services/notes.service';
 export class NotesComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
-    private usersService: UsersService,
-    private notesService: NotesService
+    public usersService: UsersService,
+    public notesService: NotesService,
+    private router:Router
   ) {}
   notesData :any;
-  openDialog(): void {
-    let dialogRef = this.dialog.open(NoteDataComponent, {
-      width: '40%',
-      height: '60%',
-      data: { title: 'hello', description: ' Ram' },
+  userId:any;
+  
+  
+  loadNotesData(this: any,id:any){
+    this.notesService.getUserNotes(id).subscribe({
+      next: (data: any) => {
+       
+          this.notesData = data;
+      },
+      error: (e: any) => console.error(e),
     });
   }
   show = false;
   ngOnInit(): void {
-    this.notesService.getAllNotes().subscribe({
-      next: (data) => {
-        this.notesData = data;
-        console.log(data);
-        
-      },
-      error: (e) => console.error(e),
-    });
+    this.userId = this.usersService.getUserId();
+    if(!this.userId){
+      alert("Unauthorized Access!!!")
+      this.router.navigate(['/signin']);
+    }
+    console.log(this.userId);
+    
+    this.loadNotesData(this.userId);
   }
+  
   setPlaceholder() {
     if (this.show) {
       $('#title').attr('placeholder', 'Title');
@@ -59,9 +67,41 @@ export class NotesComponent implements OnInit {
 
   onAddNote() {
     if (this.addnoteForm.valid) {
-      console.log(this.addnoteForm.value);
-      this.addnoteForm.reset(this.addnoteForm.value)
+      let formData = this.addnoteForm.value;
+      let data = {
+        "userId": this.userId,
+        ...formData
+      }
+      console.log(data);
+      this.notesService.createNote(data).subscribe({
+        next:(data)=>{
+          this.addnoteForm.reset()
+          alert("Note added successfully")
+          this.loadNotesData(this.userId);
+        },
+        error: (e: any) => console.error(e),
+      })
+      // this.loadNotesData(this.userId);
     }
+  }
+
+ 
+  openDialog(noteId:any,title:any,description:any): void {
+    let dialogRef = this.dialog.open(NoteDataComponent, {
+      width: '40%',
+      height: '60%',
+      data: { noteId:noteId,title: title, description: description },
+    });
+    dialogRef.afterClosed().subscribe(
+      response => {
+        console.log("here");
+        
+        console.log(response);
+        if(response){
+          this.notesData = response;
+        }
+      }
+    )
   }
 
   deleteNote(event: any) {

@@ -19,7 +19,7 @@ function changeTimeZone(date, timeZone) {
     }),
   );
 }
-
+// create new   note
 notesRoute.route("/create").post(authorize, (req, res, next) => {
   console.log(req.body);
   const note = new Notes({
@@ -32,14 +32,19 @@ notesRoute.route("/create").post(authorize, (req, res, next) => {
   note
   .save({returnOriginal:false})
           .then((data) => {
-      console.log("data -->" + data);
-      res.status(201).json(data);
+      res.status(201).json({
+        message: "Note successfully created!",
+        result: data,
+      });
     })
-    .catch(function (err) {
-      return next(err);
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        error: error,
+      });
     });
 });
-
+// get all notes or filter by user id
 notesRoute.route("/").get(authorize, (req, res, next) => {
   if(!req.query.user){
     Notes.find()
@@ -59,7 +64,7 @@ notesRoute.route("/").get(authorize, (req, res, next) => {
     });
   }
 });
-
+// get single note using id
 notesRoute.route("/:id").get(authorize, (req, res) => {
     Notes.findById(req.params.id)
     .then(function (data) {
@@ -69,7 +74,7 @@ notesRoute.route("/:id").get(authorize, (req, res) => {
       return next(err);
     });
 });
-
+// update note using id
 notesRoute.route("/update/:id").put(authorize, (req, res, next) => {
   const note = new Notes({
     userId: req.body.userId,
@@ -84,7 +89,7 @@ notesRoute.route("/update/:id").put(authorize, (req, res, next) => {
     description: req.body.description,
     updated_at: changeTimeZone(new Date(), "Asia/Kolkata")
     },
-  })
+  },{returnOriginal:false})
     .then((data) => {
       res.json(data);
       console.log("Data updated successfully");
@@ -94,7 +99,7 @@ notesRoute.route("/update/:id").put(authorize, (req, res, next) => {
       return next(error);
     });
 });
-
+// delete note
 notesRoute.route("/delete/:id").delete(authorize, (req, res, next) => {
   Notes.deleteOne({_id : req.params.id})
     .then((data) => {
