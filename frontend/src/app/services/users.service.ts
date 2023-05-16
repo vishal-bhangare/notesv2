@@ -71,7 +71,7 @@ export class UsersService {
   // Verify User
   verifyUser(token: any): Observable<any> {
     var API_URL = `${this.apiUrl}/verify-user/${token}`;
-    return this.http.post(API_URL, {}).pipe(catchError(this.error));
+    return this.http.put(API_URL, {}).pipe(catchError(this.error));
   }
   getToken() {
    return this.cookieService.get('user-token');

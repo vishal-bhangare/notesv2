@@ -17,7 +17,7 @@ export class NotesComponent implements OnInit {
     private usersService: UsersService,
     private notesService: NotesService
   ) {}
-
+  notesData :any;
   openDialog(): void {
     let dialogRef = this.dialog.open(NoteDataComponent, {
       width: '40%',
@@ -29,6 +29,7 @@ export class NotesComponent implements OnInit {
   ngOnInit(): void {
     this.notesService.getAllNotes().subscribe({
       next: (data) => {
+        this.notesData = data;
         console.log(data);
         
       },
@@ -51,43 +52,18 @@ export class NotesComponent implements OnInit {
     this.setPlaceholder();
   }
 
-  notesData = [
-    {
-      id: 1,
-      title: 'this is note 1',
-      desc: 'this is description of note 1 of userId 000',
-    },
-    {
-      id: 2,
-      title: 'this is note 1',
-      desc: 'this is description of note 2 of userId 000',
-    },
-  ];
-  curNoteCount = 2;
-
   addnoteForm = new FormGroup({
     title: new FormControl(''),
     description: new FormControl(''),
   });
-  onSubmit() {
+
+  onAddNote() {
     if (this.addnoteForm.valid) {
       console.log(this.addnoteForm.value);
+      this.addnoteForm.reset(this.addnoteForm.value)
     }
   }
-  addNote() {
-    if (this.show) {
-      const noteTitle = $('#title').val();
-      const noteDesc = $('#description').val();
-      $('#title').val('');
-      $('#description').val('');
-      const note = {
-        id: ++this.curNoteCount,
-        title: String(noteTitle),
-        desc: String(noteDesc),
-      };
-      this.notesData = this.notesData.concat(note);
-    }
-  }
+
   deleteNote(event: any) {
     const id = event.target.parentElement.parentElement.getAttribute('id');
     for (const index in this.notesData) {

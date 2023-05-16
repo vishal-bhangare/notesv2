@@ -19,6 +19,12 @@ let Notes = new Schema({
    }
 }, {
    collection: 'notes'
-})
+},{
+   timestamps:
+   {
+     createdAt: 'created_at', // Use `created_at` to store the created date
+     updatedAt: 'updated_at' // and `updated_at` to store the last updated date
+   }
+ })
 
 module.exports = mongoose.model('Notes', Notes)

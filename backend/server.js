@@ -71,9 +71,9 @@ app.use(function (err, req, res, next) {
 // console.log(edata);
 // console.log(decryptData(edata));
 
-token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDYyMzI2MmRjZmJkNDljZTc3ZDA5NjAiLCJpYXQiOjE2ODQxNTcwMjYsImV4cCI6MTY4NDIwMDIyNn0.fc4lMUAXbMbl96Z6OSw-ejkCkUT0tz0_AY-OGnreU6U'
-decoded = jwt.decode(token, process.env.TOKEN_SECRET);
-console.log(decoded["userId"]);
+// token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDYyMzI2MmRjZmJkNDljZTc3ZDA5NjAiLCJpYXQiOjE2ODQxNTcwMjYsImV4cCI6MTY4NDIwMDIyNn0.fc4lMUAXbMbl96Z6OSw-ejkCkUT0tz0_AY-OGnreU6U'
+// decoded = jwt.decode(token, process.env.TOKEN_SECRET);
+// console.log(decoded["userId"]);
 // {
 //     "userId":"1abcde",
 //     "title":"title1",

@@ -50,8 +50,7 @@ usersRoute
           name: req.body.name,
           email: req.body.email,
           password: hash,
-          account_status: req.body.account_status,
-
+          account_status: 0,
         });
         user
           .save({returnOriginal:false})
@@ -199,7 +198,6 @@ usersRoute.route("/delete-user/:id").delete((req, res, next) => {
 
 usersRoute.route("/verify-user/:token").put((req, res, next) => {
   user_id = jwt.decode(req.params.token, process.env.TOKEN_SECRET)["userId"];
-  console.log(user_id);
   userSchema
     .findByIdAndUpdate(user_id, {
       $set: { account_status: 1 },

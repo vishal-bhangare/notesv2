@@ -1,6 +1,6 @@
 <div class="addNote-container">
     <!-- [ngStyle]="{'display': isAddNoteClicked ? 'block' : 'none'}" -->
-    <form [formGroup]="addnoteForm" (ngSubmit)="onSubmit()" class="addNote" (appOutsideClick)="outsideClick($event)">
+    <form [formGroup]="addnoteForm" (ngSubmit)="onAddNote()" class="addNote" (appOutsideClick)="outsideClick($event)">
       <div class="title-container">
         <textarea
           id="title"
@@ -79,7 +79,6 @@
           <button
           class="Button"
             type="submit"
-            (click)="addNote()"
             matRipple
             [matRippleCentered]="false"
             [matRippleDisabled]="false"
@@ -109,11 +108,12 @@
   <div
     class="note"
     *ngFor="let data of notesData"
-    data-id="{{ data.id }}"
+    data-id="{{ data._id }}"
     (click)="openDialog()"
+
   >
     <div class="title">{{ data.title }}</div>
-    <div class="description">{{ data.desc }}</div>
+    <div class="description">{{ data.description }}</div>
     <button (click)="$event.stopPropagation()" 
       class="icon-button pin"
       matRipple

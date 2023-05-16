@@ -21,9 +21,14 @@ export class VerifyComponent implements OnInit {
   ngOnInit(): void {
     $('body').css('background', '#111111e8');
     this.token = this.route.snapshot.paramMap.get('token');
-    this.token = jwt_decode(this.token);
     this.id = this.token['userId'];
-    // this.router.navigate([`/signin/?id=${this.id}`]);
+    this.usersService.verifyUser(this.token).subscribe({
+      next: (data) => {
+        console.log(data);
+        
+      },
+      error: (e) => console.error(e),
+    });;
   }
   gotoDashboard(){
     this.usersService.tokenSignin(this.id).subscribe({
