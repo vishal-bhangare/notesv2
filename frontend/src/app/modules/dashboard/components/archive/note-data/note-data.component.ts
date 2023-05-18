@@ -63,20 +63,18 @@ export class ArchiveNoteDataComponent implements OnInit {
     }
   }
   onDelete() {
-    this.notesService.deleteNote(this.noteId).subscribe({
-      next: (data) => {
-        this.refreshNotesData();
+    this.notesService.addToTrashFromArchive(this.noteId).subscribe({
+      next: (data: any) => {
         alert('note is deleted');
         this.onClose();
       },
-      error: (e) => console.log(e),
+      error: (e: any) => console.log(e),
     });
   }
   onUnarchive() {
     this.notesService.removeFromArchive(this.noteId).subscribe({
       next:(data)=>{
-        console.log(data);
-        
+        console.log(data); 
         this.refreshNotesData();
         delay(3000)
         this.onClose();

@@ -1,1 +1,19 @@
-<p>This component is currently being developed</p>
+<div class="Notes-container">
+  <div class="note" *ngFor="let data of notesData" data-id="{{ data._id }}">
+    <div class="title">{{ data.title }}</div>
+    <div class="description">{{ data.description }}</div>
+    <button
+      (click)="$event.stopPropagation()"
+      (click)="onRestore(data._id)"
+      class="icon-button trash-undo"
+      matRipple
+      [matRippleCentered]="true"
+      [matRippleDisabled]="false"
+      [matRippleUnbounded]="true"
+      [matRippleRadius]="22"
+      [matRippleColor]="'#11111110'"
+    >
+      <i class="fa-solid fa-trash-undo"></i>
+    </button>
+  </div>
+</div>

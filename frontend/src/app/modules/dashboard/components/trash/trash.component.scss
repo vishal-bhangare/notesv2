@@ -1,0 +1,66 @@
+.Notes-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 0px;
+
+  .note {
+    position: relative;
+    min-width: 600px;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 8px;
+    margin: 5px 0px;
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+
+    .title {
+      font-size: 1rem;
+    }
+    .description {
+      font-size: 0.8rem;
+    }
+    .trash-undo {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 60px;
+      font-size: 1.4rem;
+      
+    }
+  }
+  .note:hover {
+    box-shadow: rgba(0, 0, 0, 0.23) 0px 2px 2px;
+  }
+}
+
+.Button {
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 1.08rem;
+  border: none;
+  margin: 0px 4px;
+}
+.Button:hover {
+  background-color: #11111110;
+}
+.icon-button {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  border-radius: 50%;
+  i {
+    width: 20px;
+    height: 20px;
+  }
+}
+.my-class .mat-dialog-container {
+  height: 400px;
+  width: 600px;
+  border-radius: 10px;
+  background: lightcyan;
+  background-color: red;
+}

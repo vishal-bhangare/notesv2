@@ -22,7 +22,7 @@ export class NotesComponent implements OnInit {
   notesData: any;
   userId: any;
 
-  loadNotesData(this: any, id: any) {
+  loadNotesData(id: any) {
     this.notesService.getUserNotes(id).subscribe({
       next: (data: any) => {
         this.notesData = data;
@@ -89,9 +89,7 @@ export class NotesComponent implements OnInit {
       data: { noteId: noteId, title: title, description: description },
     });
     dialogRef.afterClosed().subscribe((response) => {
-      if (response) {
-        this.loadNotesData(this.userId);
-      }
+      this.loadNotesData(this.userId);
     });
   }
 

@@ -16,12 +16,11 @@ import { data } from 'jquery';
 export class NotesService {
   apiUrl: string = 'http://localhost:4000/api/notes';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
-  constructor(
-    private http: HttpClient  ) {}
+  constructor(private http: HttpClient) {}
 
   createNote(data: any): Observable<any> {
     console.log(data);
-    
+
     let API_URL = `${this.apiUrl}/create`;
     return this.http.post(API_URL, data).pipe(catchError(this.error));
   }
@@ -84,7 +83,7 @@ export class NotesService {
               return false;
             },
           });
-          
+
         return true;
       },
       error: (err: any) => {
@@ -92,24 +91,23 @@ export class NotesService {
         return false;
       },
     });
- return true;
+    return true;
   }
-noteData:any;
+  noteData: any;
+
   removeFromArchive(id: any): Observable<any> {
     let API_URL = `${this.apiUrl}/archive/remove/${id}`;
 
-    
-    console.log(this.getArchivedNote(id).subscribe({
-      next:(data)=>{
+    this.getArchivedNote(id).subscribe({
+      next: (data) => {
         this.createNote(data).subscribe({
-          next:(data)=>{
+          next: (data) => {
             console.log(data);
-          }
+          },
         });
-      }
-    }));
-    
-    
+      },
+    });
+
     return this.http
       .delete(API_URL, { headers: this.headers })
       .pipe(catchError(this.error));
@@ -121,13 +119,91 @@ noteData:any;
   getDeletedNote(id: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/trash/${id}`);
   }
-  addToTrash(data: any): Observable<any> {
+  addToTrash(id: any): any {
     let API_URL = `${this.apiUrl}/trash/add`;
-    return this.http.post(API_URL, data).pipe(catchError(this.error));
+    this.getNote(id).subscribe({
+      next: (data: any) => {
+        this.http
+          .post(API_URL, data)
+          .pipe(catchError(this.error))
+          .subscribe({
+            next: () => {
+              this.deleteNote(id).subscribe({
+                next: (data: any) => {
+                  console.log(data);
+                  return data;
+                },
+                error: (e: any) => {
+                  console.log(e);
+                  return false;
+                },
+              });
+            },
+            error: () => {
+              return false;
+            },
+          });
+
+        return true;
+      },
+      error: (err: any) => {
+        console.log(err);
+        return false;
+      },
+    });
+    return true;
+  }
+  addToTrashFromArchive(id: any): any {
+    let API_URL = `${this.apiUrl}/trash/add`;
+    this.getArchivedNote(id).subscribe({
+      next: (data: any) => {
+        this.http
+          .post(API_URL, data)
+          .pipe(catchError(this.error))
+          .subscribe({
+            next: () => {
+              this.http
+                .delete(`${this.apiUrl}/archive/remove/${id}`, data)
+                .pipe(catchError(this.error))
+                .subscribe({
+                  next: (data: any) => {
+                    console.log(data);
+                    return data;
+                  },
+                  error: (e: any) => {
+                    console.log(e);
+                    return false;
+                  },
+                });
+            },
+            error: () => {
+              return false;
+            },
+          });
+
+        return true;
+      },
+      error: (err: any) => {
+        console.log(err);
+        return false;
+      },
+    });
+    return true;
   }
 
-  removeFromTrash(id: any): Observable<any> {
+  restoreFromTrash(id: any): Observable<any> {
     let API_URL = `${this.apiUrl}/trash/remove/${id}`;
+
+    this.getDeletedNote(id).subscribe({
+      next: (data) => {
+        this.createNote(data).subscribe({
+          next: (data) => {
+            console.log(data);
+          },
+        });
+      },
+    });
+
     return this.http
       .delete(API_URL, { headers: this.headers })
       .pipe(catchError(this.error));

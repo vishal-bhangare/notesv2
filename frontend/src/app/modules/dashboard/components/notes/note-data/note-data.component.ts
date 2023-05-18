@@ -54,22 +54,20 @@ export class NoteDataComponent {
     }
   }
   onDelete() {
-    this.notesService.deleteNote(this.noteId).subscribe({
-      next: (data) => {
+    this.notesService.addToTrash(this.noteId).subscribe({
+      next: (data: any) => {
         this.modified = true;
         alert('note is deleted');
         this.onClose();
       },
-      error: (e) => console.log(e),
+      error: (e: any) => console.log(e),
     });
   }
   onArchive() {
     let data = this.notesService.addToArchive(this.noteId);
-    console.log(data);
-    
-    if (data) {
-      this.modified = true;
-    }
+    this.modified = true;
+    // console.log(data);
+    this.onClose();
   }
   toggleEdit() {
     this.isEditable = this.isEditable ? false : true;
