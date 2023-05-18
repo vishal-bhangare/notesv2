@@ -180,7 +180,7 @@ notesRoute.route("/archive/remove/:id").delete(authorize, (req, res, next) => {
       });
     })
     .catch((err) => {
-      return next(error);
+      return next(err);
     });
 });
 

@@ -28,21 +28,10 @@ export class NoteDataComponent {
     this.userId = this.usersService.getUserId();
     this.toggleInputFields();
   }
-  notesData: any = '';
-
-  refreshNotesData() {
-    this.notesService.getUserNotes(this.userId).subscribe({
-      next: (data: any) => {
-        this.notesData = data;
-      },
-      error: (e: any) => console.error(e),
-    });
-  }
+  modified = false;
 
   onClose(): void {
-    console.log(this.notesData);
-
-    this.dialogRef.close(this.notesData);
+    this.dialogRef.close(this.modified);
   }
   noteDataForm = new FormGroup({
     title: new FormControl(this.data.title),
@@ -57,7 +46,7 @@ export class NoteDataComponent {
       };
       this.notesService.updateNote(data, this.noteId).subscribe({
         next: (data) => {
-          this.refreshNotesData();
+          this.modified = true;
           alert('Note updated successfully');
         },
         error: (e: any) => console.error(e),
@@ -67,7 +56,7 @@ export class NoteDataComponent {
   onDelete() {
     this.notesService.deleteNote(this.noteId).subscribe({
       next: (data) => {
-        this.refreshNotesData();
+        this.modified = true;
         alert('note is deleted');
         this.onClose();
       },
@@ -76,11 +65,10 @@ export class NoteDataComponent {
   }
   onArchive() {
     let data = this.notesService.addToArchive(this.noteId);
+    console.log(data);
+    
     if (data) {
-      this.refreshNotesData();
-      console.log(data);
-    } else {
-      console.error(data);
+      this.modified = true;
     }
   }
   toggleEdit() {

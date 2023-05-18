@@ -17,10 +17,7 @@ export class NotesService {
   apiUrl: string = 'http://localhost:4000/api/notes';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(
-    private http: HttpClient,
-    private router: Router,
-    private cookieService: CookieService
-  ) {}
+    private http: HttpClient  ) {}
 
   createNote(data: any): Observable<any> {
     console.log(data);
@@ -63,18 +60,18 @@ export class NotesService {
 
   addToArchive(id: any): any {
     let API_URL = `${this.apiUrl}/archive/add`;
-    let noteData: any;
+    let pass = false;
     this.getNote(id).subscribe({
       next: (data: any) => {
-        noteData = data;
         this.http
-          .post(API_URL, noteData)
+          .post(API_URL, data)
           .pipe(catchError(this.error))
           .subscribe({
-            next: (data) => {
+            next: () => {
               this.deleteNote(id).subscribe({
                 next: (data: any) => {
                   console.log(data);
+                  pass = true;
                   return data;
                 },
                 error: (e: any) => {
@@ -83,33 +80,36 @@ export class NotesService {
                 },
               });
             },
-            error: (err) => {
+            error: () => {
               return false;
             },
           });
+          
+        return true;
       },
       error: (err: any) => {
         console.log(err);
         return false;
       },
     });
+ return true;
   }
 noteData:any;
   removeFromArchive(id: any): Observable<any> {
     let API_URL = `${this.apiUrl}/archive/remove/${id}`;
 
-    this.getArchivedNote(id).subscribe((value) => {
-      this.noteData = value;
-    });
     
-    console.log(this.noteData);
-    
-    this.createNote(this.noteData).subscribe({
+    console.log(this.getArchivedNote(id).subscribe({
       next:(data)=>{
-        console.log(data);
-        
+        this.createNote(data).subscribe({
+          next:(data)=>{
+            console.log(data);
+          }
+        });
       }
-    });
+    }));
+    
+    
     return this.http
       .delete(API_URL, { headers: this.headers })
       .pipe(catchError(this.error));

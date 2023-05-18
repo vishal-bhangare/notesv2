@@ -89,11 +89,8 @@ export class NotesComponent implements OnInit {
       data: { noteId: noteId, title: title, description: description },
     });
     dialogRef.afterClosed().subscribe((response) => {
-      console.log('here');
-
-      console.log(response);
       if (response) {
-        this.notesData = response;
+        this.loadNotesData(this.userId);
       }
     });
   }
