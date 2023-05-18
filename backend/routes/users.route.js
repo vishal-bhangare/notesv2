@@ -155,10 +155,7 @@ usersRoute.route("/user-profile/:id").get((req, res, next) => {
   userSchema
     .findById(req.params.id)
     .then(function (data) {
-      console.log("data -->" + data);
-      res.status(200).json({
-        msg: data,
-      });
+      res.status(200).json(data);
     })
     .catch(function (err) {
       return next(err);

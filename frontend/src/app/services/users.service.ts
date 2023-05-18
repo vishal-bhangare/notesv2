@@ -43,6 +43,9 @@ export class UsersService {
   getAll() {
     return this.http.get(`${this.apiUrl}/`);
   }
+  getProfile(id: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/user-profile/${id}`);
+  }
   // SignIn
   signin(data: any): Observable<any> {
     let API_URL = `${this.apiUrl}/signin`;
@@ -74,10 +77,10 @@ export class UsersService {
     return this.http.put(API_URL, {}).pipe(catchError(this.error));
   }
   getToken() {
-   return this.cookieService.get('user-token');
+    return this.cookieService.get('user-token');
   }
   getUserId() {
-   return this.cookieService.get('user-id');
+    return this.cookieService.get('user-id');
   }
   get isLoggedIn(): boolean {
     let authToken = this.cookieService.get('user-token');
@@ -85,12 +88,11 @@ export class UsersService {
   }
   doLogout() {
     let removeToken = this.cookieService.delete('user-token');
-    let removeId= this.cookieService.delete('user-id');
-    if (removeToken == null &&  removeId == null) {
+    let removeId = this.cookieService.delete('user-id');
+    if (removeToken == null && removeId == null) {
       this.router.navigate(['signin']);
-    }
-    else{
-      alert("Unable to logout")
+    } else {
+      alert('Unable to logout');
     }
   }
   // Handle Errors

@@ -18,12 +18,17 @@ import { MatRippleModule } from '@angular/material/core';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { TextareaAutoresizeDirective } from 'src/app/directives/textarea-autoresize.directive';
 import { OutsideClickDirective } from 'src/app/directives/outside-click.directive';
-import { MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { NoteDataComponent } from './components/notes/note-data/note-data.component';
 import { ArchiveNoteDataComponent } from './components/archive/note-data/note-data.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from 'src/app/common/authconfig.interceptor';
+import {
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBarModule,
+} from '@angular/material/snack-bar';
+import { DashboardSnackbarComponent } from './components/dashboard-snackbar/dashboard-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,9 @@ import { AuthInterceptor } from 'src/app/common/authconfig.interceptor';
     RemindersComponent,
     TextareaAutoresizeDirective,
     OutsideClickDirective,
-    NoteDataComponent,ArchiveNoteDataComponent
+    NoteDataComponent,
+    ArchiveNoteDataComponent,
+    DashboardSnackbarComponent,
   ],
   imports: [
     CommonModule,
@@ -48,12 +55,23 @@ import { AuthInterceptor } from 'src/app/common/authconfig.interceptor';
     ClickOutsideModule,
     MatDialogModule,
     FormsModule,
-        ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule,
   ],
-  providers:[{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true,
-  },]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        duration: 2500,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+      },
+    },
+  ],
 })
-export class DashboardModule { }
+export class DashboardModule {}

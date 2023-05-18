@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotesService } from 'src/app/services/notes.service';
 import { UsersService } from 'src/app/services/users.service';
 import { NotesComponent } from '../notes.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-note-data',
@@ -15,9 +17,14 @@ export class NoteDataComponent {
     public dialogRef: MatDialogRef<NoteDataComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private notesService: NotesService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private snackBar: MatSnackBar
   ) {}
-
+  openSnackbar(msg:string) {
+    this.snackBar.open(msg, undefined,{
+      duration: 1000
+    });
+  }
   noteId: any;
   userId: any;
   isEditable = false;
@@ -47,26 +54,22 @@ export class NoteDataComponent {
       this.notesService.updateNote(data, this.noteId).subscribe({
         next: (data) => {
           this.modified = true;
-          alert('Note updated successfully');
+          this.openSnackbar("Note saved.");
         },
         error: (e: any) => console.error(e),
       });
     }
   }
   onDelete() {
-    this.notesService.addToTrash(this.noteId).subscribe({
-      next: (data: any) => {
-        this.modified = true;
-        alert('note is deleted');
-        this.onClose();
-      },
-      error: (e: any) => console.log(e),
-    });
+    this.notesService.addToTrash(this.noteId).subscribe();
+    delay(1000)
+    this.onClose();
+    this.openSnackbar("This note is moved to trash");
   }
   onArchive() {
     let data = this.notesService.addToArchive(this.noteId);
     this.modified = true;
-    // console.log(data);
+    this.openSnackbar("Note archived.");
     this.onClose();
   }
   toggleEdit() {

@@ -6,7 +6,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { UsersService } from 'src/app/services/users.service';
 import { NotesService } from 'src/app/services/notes.service';
 import { Router, RouterModule } from '@angular/router';
-
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { DashboardSnackbarComponent } from '../dashboard-snackbar/dashboard-snackbar.component';
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
@@ -17,8 +22,16 @@ export class NotesComponent implements OnInit {
     public dialog: MatDialog,
     public usersService: UsersService,
     public notesService: NotesService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
+
+  openSnackbar(msg:string) {
+    this.snackBar.open(msg, undefined,{
+      duration: 1000
+    });
+  }
+
   notesData: any;
   userId: any;
 
@@ -28,6 +41,12 @@ export class NotesComponent implements OnInit {
         this.notesData = data;
       },
       error: (e: any) => console.error(e),
+    });
+  }
+  openSnackbarWithClose(msg:any){
+    this.snackBar.openFromComponent(DashboardSnackbarComponent, {
+      data: msg,
+      duration:2500
     });
   }
   show = false;
@@ -73,7 +92,7 @@ export class NotesComponent implements OnInit {
       this.notesService.createNote(data).subscribe({
         next: (data) => {
           this.addnoteForm.reset();
-          alert('Note added successfully');
+          this.openSnackbar('Note added successfully');
           this.loadNotesData(this.userId);
         },
         error: (e: any) => console.error(e),

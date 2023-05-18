@@ -6,6 +6,9 @@ import { NavigationEnd, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { UsersService } from 'src/app/services/users.service';
 import * as $ from 'jquery';
+import { CookieService } from 'ngx-cookie-service';
+import { DashboardSnackbarComponent } from '../dashboard-snackbar/dashboard-snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @UntilDestroy()
 @Component({
@@ -15,20 +18,40 @@ import * as $ from 'jquery';
 })
 export class DashboardComponent implements OnInit {
   viewType = 'list-view';
-
+  constructor(
+    private observer: BreakpointObserver,
+    private router: Router,
+    private usersService: UsersService,
+    private snackBar:MatSnackBar
+  ) {}
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
+  userId:any;
+  userName:any;
+  userEmail:any;
+
   ngOnInit(): void {
-    // $(".user-menu-wrap").slideToggle("fast","swing");
     let model = $('.user-menu');
-    //   autoOpen: false,
-    //   position: { my: "right top", at: "right top", of: window }
-    // });
-    // });
-    // const openModal = document.querySelector(".open-button");
-    // const closeModal = document.querySelector(".close-button");
     let isHidden = true;
     let count = 0;
+    this.userId = this.usersService.getUserId();
+    if (!this.userId) {
+      this.openSnackbarWithClose('Unauthorized Access!!!');
+      this.router.navigate(['/signin']);
+    }
+    this.usersService.getProfile(this.userId).subscribe({
+      next:(data:any)=>{
+        this.userName = data["name"];
+        this.userEmail = data["email"];
+        
+      },
+      error:(err:any)=>{
+        console.error(err);
+        
+      }
+
+    })
+
     $('.navbar #right #userPic').on('click', () => {
       
       if (isHidden) {
@@ -51,29 +74,14 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
-    // openModal.addEventListener("click", () => {
-    //   model.showModal();
-    // });
-
-    // closeModal.addEventListener("click", () => {
-    //   modal.setAttribute("closing", "");
-
-    //   modal.addEventListener(
-    //     "animationend",
-    //     () => {
-    //       modal.removeAttribute("closing");
-    //       modal.close();
-    //     },
-    //     { once: true }
-    //   );
-    // });
+    
   }
-  constructor(
-    private observer: BreakpointObserver,
-    private router: Router,
-    private usersService: UsersService
-  ) {}
-
+  openSnackbarWithClose(msg:any){
+    this.snackBar.openFromComponent(DashboardSnackbarComponent, {
+      data: msg,
+      duration:2500
+    });
+  }
   ngAfterViewInit() {
     this.observer
       .observe(['(max-width: 700px)'])
