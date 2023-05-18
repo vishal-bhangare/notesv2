@@ -8,6 +8,7 @@ import {
 } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { data } from 'jquery';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,8 @@ export class NotesService {
   ) {}
 
   createNote(data: any): Observable<any> {
+    console.log(data);
+    
     let API_URL = `${this.apiUrl}/create`;
     return this.http.post(API_URL, data).pipe(catchError(this.error));
   }
@@ -35,7 +38,7 @@ export class NotesService {
   }
   getNote(id: any): Observable<any> {
     return this.http
-      .get(`${this.apiUrl}/${id}`, { headers: this.headers })
+      .get(`${this.apiUrl}/?id=${id}`, { headers: this.headers })
       .pipe(catchError(this.error));
   }
   updateNote(data: any, id: any): Observable<any> {
@@ -47,9 +50,89 @@ export class NotesService {
   deleteNote(id: any): Observable<any> {
     let API_URL = `${this.apiUrl}/delete/${id}`;
     return this.http
-      .delete(API_URL,{ headers: this.headers })
+      .delete(API_URL, { headers: this.headers })
       .pipe(catchError(this.error));
   }
+
+  getArchivedNotes(id: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/archive/?user=${id}`);
+  }
+  getArchivedNote(id: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/archive/?id=${id}`);
+  }
+
+  addToArchive(id: any): any {
+    let API_URL = `${this.apiUrl}/archive/add`;
+    let noteData: any;
+    this.getNote(id).subscribe({
+      next: (data: any) => {
+        noteData = data;
+        this.http
+          .post(API_URL, noteData)
+          .pipe(catchError(this.error))
+          .subscribe({
+            next: (data) => {
+              this.deleteNote(id).subscribe({
+                next: (data: any) => {
+                  console.log(data);
+                  return data;
+                },
+                error: (e: any) => {
+                  console.log(e);
+                  return false;
+                },
+              });
+            },
+            error: (err) => {
+              return false;
+            },
+          });
+      },
+      error: (err: any) => {
+        console.log(err);
+        return false;
+      },
+    });
+  }
+noteData:any;
+  removeFromArchive(id: any): Observable<any> {
+    let API_URL = `${this.apiUrl}/archive/remove/${id}`;
+
+    this.getArchivedNote(id).subscribe((value) => {
+      this.noteData = value;
+    });
+    
+    console.log(this.noteData);
+    
+    this.createNote(this.noteData).subscribe({
+      next:(data)=>{
+        console.log(data);
+        
+      }
+    });
+    return this.http
+      .delete(API_URL, { headers: this.headers })
+      .pipe(catchError(this.error));
+  }
+
+  getDeletedNotes(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/trash`);
+  }
+  getDeletedNote(id: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/trash/${id}`);
+  }
+  addToTrash(data: any): Observable<any> {
+    let API_URL = `${this.apiUrl}/trash/add`;
+    return this.http.post(API_URL, data).pipe(catchError(this.error));
+  }
+
+  removeFromTrash(id: any): Observable<any> {
+    let API_URL = `${this.apiUrl}/trash/remove/${id}`;
+    return this.http
+      .delete(API_URL, { headers: this.headers })
+      .pipe(catchError(this.error));
+  }
+
   error(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

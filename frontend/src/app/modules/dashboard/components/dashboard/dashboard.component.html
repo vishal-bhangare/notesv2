@@ -53,16 +53,25 @@
     [style.display]="(viewType=='list-view') ? 'inline-block' : 'none'">
     <i class="fa-solid fa-list-ul" id="list-view" ></i></button>
 
-    <button class="icon-button" 
-    (click)="logout()"
+    <button id="userPic" class="icon-button" 
     matRipple
     [matRippleCentered]="true"
     [matRippleDisabled]="false"
     [matRippleUnbounded]="true"
     [matRippleRadius]="25"
-    [matRippleColor]="'#1111110D'">
-    <i class="fa-solid fa-user" id="user"></i></button>
+    [matRippleColor]="'#1111110D'">VB</button>
   </div>
+    <dialog class="user-menu" id="user-menu">
+      <div class="user-info">
+        <img src="assets/user-img.png" alt="">
+        <span id="user-name">Vishal Bhangare</span>
+        <span id="user-email">vishalbhangare2@gmail.com</span>
+      </div>
+      <hr>
+      <a class="account-setting"><i class="fa-regular fa-gear"></i>Account setting</a>
+      <a class="logout"     (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+    </dialog>
+
 </mat-toolbar>
 
 <mat-sidenav-container>

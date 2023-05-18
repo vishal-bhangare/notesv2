@@ -1,0 +1,64 @@
+<form [formGroup]="noteDataForm" (ngSubmit)="onSave()">
+  <mat-dialog-content
+    ><textarea
+    name="title"
+    id="title"
+    class="form-control"
+    formControlName="title"
+    textarea-autoresize
+  ></textarea><br>
+  <textarea
+      type="text"
+      name="description"
+      id="description"
+      class="form-control"
+      formControlName="description"
+      textarea-autoresize
+  ></textarea></mat-dialog-content>
+  <mat-dialog-actions>
+    <div class="group1">
+      <button type="button"
+      (click)="onUnarchive()"
+      class="icon-button"
+      matRipple
+      [matRippleCentered]="true"
+      [matRippleDisabled]="false"
+      [matRippleUnbounded]="true"
+      [matRippleRadius]="22"
+      [matRippleColor]="'#1111111D'"
+    >
+      <i class="fa-solid fa-inbox-out"></i>
+    </button>
+    <button type="button"
+    (click)="onDelete()"
+      class="icon-button"
+      matRipple
+      [matRippleCentered]="true"
+      [matRippleDisabled]="false"
+      [matRippleUnbounded]="true"
+      [matRippleRadius]="22"
+      [matRippleColor]="'#1111111D'"
+    >
+      <i class="fa-solid fa-trash"></i>
+    </button>
+    <button type="button" (click)="toggleEdit()"
+      [style.background]="this.isEditable ? '#1111111D' : 'none'"
+      class="icon-button"
+      matRipple
+      [matRippleCentered]="true"
+      [matRippleDisabled]="false"
+      [matRippleUnbounded]="true"
+      [matRippleRadius]="22"
+      [matRippleColor]="'#1111111D'"
+    #editBtn>
+    <i class="fa-solid fa-pen-to-square" ></i>
+    </button>
+    </div>
+    <div class="group2">
+
+    <button  (click)="$event.stopPropagation()"  mat-button type="submit" 
+    [style.display]="this.isEditable ? 'inline' : 'none'">Save</button>
+    <button mat-button type="button" (click)="onClose()">Close</button>
+    </div>
+  </mat-dialog-actions>
+</form>

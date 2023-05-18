@@ -18,13 +18,14 @@
   <mat-dialog-actions>
     <div class="group1">
       <button type="button"
+      (click)="onArchive()"
       class="icon-button"
       matRipple
       [matRippleCentered]="true"
       [matRippleDisabled]="false"
       [matRippleUnbounded]="true"
       [matRippleRadius]="22"
-      [matRippleColor]="'#1111110D'"
+      [matRippleColor]="'#1111111D'"
     >
       <i class="fa-solid fa-inbox-in"></i>
     </button>
@@ -36,7 +37,7 @@
       [matRippleDisabled]="false"
       [matRippleUnbounded]="true"
       [matRippleRadius]="22"
-      [matRippleColor]="'#1111110D'"
+      [matRippleColor]="'#1111111D'"
     >
       <i class="fa-solid fa-trash"></i>
     </button>
@@ -48,7 +49,7 @@
       [matRippleDisabled]="false"
       [matRippleUnbounded]="true"
       [matRippleRadius]="22"
-      [matRippleColor]="'#1111110D'"
+      [matRippleColor]="'#1111111D'"
     #editBtn>
     <i class="fa-solid fa-pen-to-square" ></i>
     </button>

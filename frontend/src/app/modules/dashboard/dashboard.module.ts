@@ -20,6 +20,7 @@ import { TextareaAutoresizeDirective } from 'src/app/directives/textarea-autores
 import { OutsideClickDirective } from 'src/app/directives/outside-click.directive';
 import { MatDialogModule} from '@angular/material/dialog';
 import { NoteDataComponent } from './components/notes/note-data/note-data.component';
+import { ArchiveNoteDataComponent } from './components/archive/note-data/note-data.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from 'src/app/common/authconfig.interceptor';
@@ -33,7 +34,7 @@ import { AuthInterceptor } from 'src/app/common/authconfig.interceptor';
     RemindersComponent,
     TextareaAutoresizeDirective,
     OutsideClickDirective,
-    NoteDataComponent,
+    NoteDataComponent,ArchiveNoteDataComponent
   ],
   imports: [
     CommonModule,
