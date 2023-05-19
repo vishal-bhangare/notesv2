@@ -5,25 +5,33 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RemindersComponent } from './components/reminders/reminders.component';
 import { ArchiveComponent } from './components/archive/archive.component';
 import { TrashComponent } from './components/trash/trash.component';
+import { authGuard } from 'src/app/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
+    canActivate: [authGuard],
     component: DashboardComponent,
     children: [
-      { path: 'notes', component: NotesComponent },
-      { path: 'reminders', component: RemindersComponent },
-      { path: 'archive', component: ArchiveComponent },
-      { path: 'trash', component: TrashComponent },
-      { path:'',redirectTo:'notes',pathMatch: 'full'}
+      { path: 'notes', canActivate: [authGuard], component: NotesComponent },
+      {
+        path: 'reminders',
+        canActivate: [authGuard],
+        component: RemindersComponent,
+      },
+      {
+        path: 'archive',
+        canActivate: [authGuard],
+        component: ArchiveComponent,
+      },
+      { path: 'trash', canActivate: [authGuard], component: TrashComponent },
+      { path: '', redirectTo: 'notes', pathMatch: 'full' },
     ],
   },
-    
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {}

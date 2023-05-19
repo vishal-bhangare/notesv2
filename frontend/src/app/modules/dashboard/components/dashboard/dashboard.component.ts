@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class DashboardComponent implements OnInit {
   viewType = 'list-view';
+  userToken: any;
   constructor(
     private observer: BreakpointObserver,
     private router: Router,
@@ -35,7 +36,8 @@ export class DashboardComponent implements OnInit {
     let isHidden = true;
     let count = 0;
     this.userId = this.usersService.getUserId();
-    if (!this.userId) {
+    this.userToken = this.usersService.getToken();
+    if (!this.userId || !this.userToken)  {
       this.openSnackbarWithClose('Unauthorized Access!!!');
       this.router.navigate(['/signin']);
     }

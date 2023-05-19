@@ -10,6 +10,7 @@ import { verificationGuard } from './guards/verification.guard';
 import { VerifyComponent } from './components/verify/verify.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -25,7 +26,7 @@ const routes: Routes = [
   { path:'verify-user/:token', component:VerifyComponent},
   {
     path: 'dashboard',
-    // canActivate: [AuthGuard],
+    canActivate: [authGuard],
     loadChildren: () =>
       import('./modules/dashboard/dashboard.module').then(
         (m) => m.DashboardModule

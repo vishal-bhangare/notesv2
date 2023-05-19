@@ -84,9 +84,19 @@ export class UsersService {
   getUserId() {
     return this.cookieService.get('user-id');
   }
-  get isLoggedIn(): boolean {
+  isLoggedIn(): boolean {
     let authToken = this.cookieService.get('user-token');
-    return authToken !== null ? true : false;
+    let userId = this.cookieService.get('user-id');
+    console.log(authToken);
+    console.log(userId);
+    
+    
+    if(authToken && userId){
+      return true;
+    }
+    else{
+      return false;
+    } 
   }
   doLogout() {
     let removeToken = this.cookieService.delete('user-token');
