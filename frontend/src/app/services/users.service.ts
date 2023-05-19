@@ -8,12 +8,14 @@ import {
 } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  apiUrl: string = 'http://localhost:4000/api/users';
+//  apiUrl: string = 'http://localhost:4000/api/users';
+  apiUrl:string = environment.USERS_API;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(
     private http: HttpClient,

@@ -9,12 +9,14 @@ import {
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { data } from 'jquery';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotesService {
-  apiUrl: string = 'http://localhost:4000/api/notes';
+  // apiUrl: string = 'http://localhost:4000/api/notes';
+  apiUrl:string = environment.NOTES_API;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient) {}
 

@@ -35,6 +35,7 @@ import {
 } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthInterceptor } from './common/authconfig.interceptor';
+import { environment } from './../environments/environment';
 
 @NgModule({
   declarations: [
