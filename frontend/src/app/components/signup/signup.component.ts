@@ -21,11 +21,10 @@ export class SignupComponent implements OnInit {
     private v: ValidatorService,
     private usersService: UsersService,
     private router: Router
-    ) {}
-    ngOnInit(): void {
-      
-    }
+  ) {}
+  ngOnInit(): void {}
   hide = true;
+  isPending = false;
   signupForm = new FormGroup(
     {
       name: new FormControl('', [Validators.required]),
@@ -35,22 +34,24 @@ export class SignupComponent implements OnInit {
     },
     { validators: this.v.passwordMatch('password', 'confirmPassword') }
   );
-  formData:any;
+  formData: any;
   onSignup() {
-    
     if (this.signupForm.valid) {
+      this.isPending = true;
       this.formData = this.signupForm.value;
-      this.usersService.signup(this.formData)
-      .subscribe({
+      this.usersService.signup(this.formData).subscribe({
         next: (data) => {
-          console.log("this is data return by api -->");
+          console.log('this is data return by api -->');
           console.log(data);
-          this.router.navigate([`/signup/verification/${data["result"]["_id"]}`]);
-          this.signupForm.reset(this.signupForm.value)
+          this.router.navigate([
+            `/signup/verification/${data['result']['_id']}`,
+          ]);
+          this.signupForm.reset(this.signupForm.value);
+          this.isPending = false;
         },
-        error: (e) => console.error(e)
+        error: (e) => console.error(e),
       });
-      console.log("this is form value -->");
+      console.log('this is form value -->');
       console.log(this.formData);
     }
   }

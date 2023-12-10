@@ -74,6 +74,9 @@
     >
   </mat-form-field>
 
-  <button type="submit" mat-flat-button color="primary">Signup</button>
+  <button type="submit" mat-flat-button color="primary">
+    <mat-spinner *ngIf="isPending" [diameter]="25" color="white"></mat-spinner>
+    <span *ngIf="!isPending">Signup</span>
+  </button>
   <a routerLink="../signin" class="signup">Already have account</a>
 </form>

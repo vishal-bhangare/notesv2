@@ -19,26 +19,33 @@ export class SigninComponent implements OnInit {
   ngOnInit(): void {
     $('body').css('background', '#fff');
   }
+
   signinForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
+
   formData: any;
+  isPending = false;
+  hide = true;
+
   onSignin() {
     if (this.signinForm.valid) {
+      this.isPending = true;
       this.formData = this.signinForm.value;
       this.usersService.signin(this.formData).subscribe({
         next: (data) => {
-          this.cookieService.set('user-token',data["token"])
-          this.cookieService.set('user-id',data["_id"])
-          this.signinForm.reset(this.signinForm.value)
+          this.cookieService.set('user-token', data['token']);
+          this.cookieService.set('user-id', data['_id']);
+          this.signinForm.reset(this.signinForm.value);
           this.router.navigate(['/dashboard']);
+          this.isPending = false;
         },
         error: (e) => console.error(e),
       });
     }
   }
-  hide = true;
+
   get fc() {
     return this.signinForm.controls;
   }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomepageComponent } from './components/homepage/homepage.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -13,17 +12,17 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomepageComponent },
   { path: 'signin', component: SigninComponent },
-  { path: 'forget-password', component: ForgetPasswordComponent},
-  { path: 'reset-password/:token', component: ResetPasswordComponent},
+  { path: '', redirectTo: '/signin', pathMatch: 'full' },
+  { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
   { path: 'signup', component: SignupComponent },
   {
     path: 'signup/verification/:id',
-    canActivate:[verificationGuard],
+    canActivate: [verificationGuard],
     component: VerificationComponent,
   },
-  { path:'verify-user/:token', component:VerifyComponent},
+  { path: 'verify-user/:token', component: VerifyComponent },
   {
     path: 'dashboard',
     canActivate: [authGuard],

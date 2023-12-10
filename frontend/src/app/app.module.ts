@@ -36,6 +36,7 @@ import {
 import { CookieService } from 'ngx-cookie-service';
 import { AuthInterceptor } from './common/authconfig.interceptor';
 import { environment } from './../environments/environment';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -63,12 +64,9 @@ import { environment } from './../environments/environment';
     HttpClientModule,
     DashboardModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
   ],
-  providers: [
-    UsersService,
-    HttpClient,
-    CookieService,
-  ],
+  providers: [UsersService, HttpClient, CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -26,6 +26,9 @@
 .mat-mdc-form-field {
   min-width: 300px;
 }
+mat-spinner::ng-deep circle {
+  stroke: #fff;
+}
 button {
   font-size: 20px;
 }

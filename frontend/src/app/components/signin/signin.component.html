@@ -33,12 +33,17 @@
     >
       <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
     </button>
-    <mat-error *ngIf="fc.password.errors?.required">Password is required</mat-error>
+    <mat-error *ngIf="fc.password.errors?.required"
+      >Password is required</mat-error
+    >
   </mat-form-field>
 
-  <button mat-flat-button color="primary" type="submit">Signin</button>
+  <button mat-flat-button color="primary" type="submit">
+    <mat-spinner *ngIf="isPending" [diameter]="25"></mat-spinner
+    ><span *ngIf="!isPending">Signin</span>
+  </button>
   <a routerLink="../forget-password" id="forget-password">Forget password</a>
-  <mat-divider style="width:70%"></mat-divider>
+  <mat-divider style="width: 80%"></mat-divider>
   <span>Don't have account?</span>
   <a routerLink="../signup" id="signup">Create an new account</a>
 </form>
